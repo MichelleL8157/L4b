@@ -3,6 +3,17 @@ public class Package {
     private Address destination;
     private double weight;
 
+    public Package(Address origin, Address destination, double weight) {
+        this.origin = origin;
+        this.destination = destination;
+        if (weight < 0.1) {
+            this.weight = 0;
+        }
+        else {
+            this.weight = weight;
+        }
+    }
+
     public Address getOrigin() {
         return origin;
     }
