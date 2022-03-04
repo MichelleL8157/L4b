@@ -6,12 +6,7 @@ public class Package {
     public Package(Address origin, Address destination, double weight) {
         this.origin = origin;
         this.destination = destination;
-        if (weight < 0.1) {
-            this.weight = 0;
-        }
-        else {
-            this.weight = weight;
-        }
+        this.weight = weight;
     }
 
     public Address getOrigin() {
