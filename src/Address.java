@@ -4,9 +4,9 @@ public class Address {
     private String apartNum; //optional
     private String city;
     private String state;
-    private int zipCode;
+    private String zipCode;
 
-    public Address(String streetNum, String streetName, String apartNum, String city, String state, int zipCode) {
+    public Address(String streetNum, String streetName, String apartNum, String city, String state, String zipCode) {
         this.streetNum = streetNum;
         this.streetName = streetName;
         this.apartNum = apartNum;
@@ -44,11 +44,11 @@ public class Address {
         return state;
     }
 
-    public int getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public Address(String address) {
+    public Address(String address) { //def not the best but work w this 4now
         String addNum = address.substring(0, address.indexOf(" "));
         address = address.substring(address.indexOf(" ") + 1);
         String nameSt = address.substring(0, address.indexOf(" "));
@@ -56,11 +56,13 @@ public class Address {
         String formSt = address.substring(0, address.indexOf(" "));
         address = address.substring(formSt.length() + 1);
         String aptNum = "";
-        if (formSt.indexOf(".") == -1) {
+        if (formSt.indexOf(".") == -1) { //there is an apt
             aptNum = address.substring(0, address.indexOf(" "));
-            address = address.substring(address.indexOf(" ") + 1);
-            String aptRoom = address.substring(0, address.indexOf(" "));
+            String aptRoom = address.substring(address.indexOf(" ") + 1, address.indexOf("."));
             aptNum += " " + aptRoom;
+            address = address.substring(address.indexOf(".") + 2);
+        } else {
+            formSt = formSt.substring(0, formSt.length() - 1);
         }
         String city = address.substring(0, address.indexOf("."));
         address = address.substring(address.indexOf(".") + 2);
@@ -72,37 +74,7 @@ public class Address {
         apartNum = aptNum;
         this.city = city;
         this.state = state;
-        zipCode = Integer.parseInt(zip);
-
-        /*
-        String[] temp = new String[8];
-        int index = 0;
-        while (address.indexOf(" ") != -1) {
-            if (address.substring(0, 1) != ".") {
-                String word = address.substring(0, address.indexOf(" "));
-                temp[index] = word;
-            }
-            else {
-                if (index == 4) {
-                    address = address.substring(1);
-                    String word = address.substring(0, address.indexOf(","));
-                    temp[index] = word;
-                }
-                if (index == 5) {
-                    String word = address.substring(2, address.indexOf(" "));
-                    temp[index] = word;
-                }
-            }
-            address = address.substring(address.indexOf(" ") + 1);
-            index++;
-        }
-        streetNum = temp[0];
-        streetName = temp[1];
-        apartNum = temp[2];
-        city = temp[3];
-        state = temp[4];
-        zipCode = Integer.parseInt(temp[5]);
-         */
+        zipCode = zip;
     }
 
     public String toString() {
@@ -112,7 +84,7 @@ public class Address {
         return streetNum + " " + streetName + " " + apartNum + ". " + city + ". " + state + " " + zipCode;
     }
 
-    private boolean sameThing(Address another) {
+    public boolean sameThing(Address another) {
         if (toString().equals(another.toString())){
             return true;
         }
